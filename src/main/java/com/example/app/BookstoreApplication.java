@@ -25,6 +25,7 @@ public class BookstoreApplication {
 			log.info("Save a couple of books");
 			repository.save(new Book("Test book", "Test author", "123-456-789", 1999, 40));
 			repository.save(new Book("Test book 2", "Test author 2", "987-654-00", 2000, 35));
+			repository.save(new Book("Scam book", "Scammer123", "123123-123", 2023, 666.666));
 			
 			log.info("Fetch all books with all data");
 			for (Book book : repository.findAll()) {

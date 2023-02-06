@@ -11,16 +11,16 @@ import jakarta.persistence.ManyToOne;
 public class Book {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String title, author, isbn;
 	private int publicationYear;
 	private double price;
-	
+
 	@ManyToOne
-    @JoinColumn(name = "categoryId")
+	@JoinColumn(name = "categoryId")
 	private Category category;
-	
+
 	public Book() {
 		title = "";
 		author = "";
@@ -37,11 +37,11 @@ public class Book {
 		this.price = price;
 		this.category = category;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
-	
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -85,11 +85,11 @@ public class Book {
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	
+
 	public Category getCategory() {
 		return category;
 	}
-	
+
 	public void setCategory(Category category) {
 		this.category = category;
 	}
@@ -99,5 +99,5 @@ public class Book {
 		return "Book [id=" + id + ", title=" + title + ", author=" + author + ", isbn=" + isbn + ", publicationYear="
 				+ publicationYear + ", price=" + price + "]";
 	}
-	
+
 }

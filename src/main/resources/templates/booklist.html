@@ -16,7 +16,7 @@
 		    <th>ISBN</th>
 		    <th>Year</th>
 		    <th>Price</th>
-		    <th colspan="2"></th>
+		    <th colspan="3"></th>
 		</tr>
     	<tr th:each = "book : ${books}">
     		<td th:text="${book.author}">author</td>
@@ -24,6 +24,7 @@
     		<td th:text="${book.isbn}">isbn</td>
     		<td th:text="${book.publicationYear}">year</td>
     		<td th:text="${book.price}">price</td>
+    		<td th:text="${book.category.name}">category</td>
     		<td><button th:onmouseup="confirmDeletion([[${book.id}]], [[${book.author}]], [[${book.title}]])"
     			class="btn btn-danger">Delete</button></td>
     		<td><a th:href="@{/booklist/edit/{id}(id=${book.id})}" class="btn btn-success">Edit</a></td>

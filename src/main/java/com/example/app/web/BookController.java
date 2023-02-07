@@ -42,7 +42,7 @@ public class BookController {
 	@PostMapping("/booklist/savebook")
 	public String saveBook(Book book) {
 		if (book != null) {
-			bookRepository.save(book);			
+			bookRepository.save(book);
 		}
 		return "redirect:/booklist";
 	}
@@ -71,7 +71,7 @@ public class BookController {
 	public String editBook(Book editedBook) {
 		if (editedBook != null) {
 			System.out.println(editedBook.toString());
-			bookRepository.save(editedBook);			
+			bookRepository.save(editedBook);
 		}
 
 		return "redirect:/booklist";

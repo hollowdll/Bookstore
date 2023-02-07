@@ -22,7 +22,7 @@ public class BookstoreApplication {
 	}
 
 	@Bean
-	public CommandLineRunner studentDemo(BookRepository bookRepository, CategoryRepository categoryRepository) {
+	public CommandLineRunner bookstoreInitializer(BookRepository bookRepository, CategoryRepository categoryRepository) {
 		return (args) -> {
 			log.info("Save a couple of categories");
 			categoryRepository.save(new Category("Horror"));

@@ -1,15 +1,20 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
-<title>Book list</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
-<link rel="stylesheet" href="/css/bootstrap.min.css"
-	th:href="@{/css/bootstrap.min.css}" />
-<script defer src="/javascript/main.js"></script>
+	<title>Book list</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="/css/bootstrap.min.css"
+		th:href="@{/css/bootstrap.min.css}" />
+	<script defer src="/javascript/main.js"></script>
 </head>
 <body>
-	<h1>Books</h1>
+	<div class="d-flex justify-content-between">
+		<h1>Books</h1>
+		<h3 th:inline="text">Welcome [[${#authentication.getPrincipal().getUsername()}]]</h3>
+		<form th:action="@{/logout}" method="post" style="padding:20px">
+			<input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
+		</form>
+	</div>
 	<table class="table table-striped">
 		<tr>
 			<th>Author</th>
@@ -18,7 +23,8 @@
 			<th>Year</th>
 			<th>Price</th>
 			<th>Category</th>
-			<th colspan="2"></th>
+			<th sec:authorize="hasRole('ADMIN')"></th>
+			<th></th>
 		</tr>
 		<tr th:each="book : ${books}">
 			<td th:text="${book.author}">author</td>
@@ -27,11 +33,19 @@
 			<td th:text="${book.publicationYear}">year</td>
 			<td th:text="${book.price}">price</td>
 			<td th:text="${book.category.name}">category</td>
-			<td><button
-					th:onmouseup="confirmDeletion([[${book.id}]], [[${book.author}]], [[${book.title}]])"
-					class="btn btn-danger">Delete</button></td>
-			<td><a th:href="@{/booklist/edit/{id}(id=${book.id})}"
-				class="btn btn-success">Edit</a></td>
+			<td sec:authorize="hasRole('ADMIN')">
+				<button th:onmouseup=
+					"confirmDeletion([[${book.id}]],
+					[[${book.author}]],
+					[[${book.title}]])"
+					class="btn btn-danger">Delete
+				</button>
+			</td>
+			<td>
+				<a th:href="@{/booklist/edit/{id}(id=${book.id})}"
+					class="btn btn-success">Edit
+				</a>
+			</td>
 		</tr>
 	</table>
 	<a href="/booklist/addbook" class="btn btn-success">Add Book</a>

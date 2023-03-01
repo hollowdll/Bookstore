@@ -7,7 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class User {
+public class AppUser {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,11 +26,11 @@ public class User {
 	@Column(name = "role", nullable = false)
 	private String role;
 	
-	public User() {
+	public AppUser() {
 		
 	}
 
-	public User(String username, String passwordHash, String email, String role) {
+	public AppUser(String username, String passwordHash, String email, String role) {
 		this.username = username;
 		this.passwordHash = passwordHash;
 		this.email = email;
@@ -79,7 +79,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", passwordHash=" + passwordHash + ", email=" + email
+		return "AppUser [id=" + id + ", username=" + username + ", passwordHash=" + passwordHash + ", email=" + email
 				+ ", role=" + role + "]";
 	}
 	

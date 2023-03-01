@@ -10,7 +10,10 @@
 <body>
 	<div class="d-flex justify-content-between">
 		<h1>Books</h1>
-		<h3 th:inline="text">Welcome [[${#authentication.getPrincipal().getUsername()}]]</h3>
+		<h3 th:inline="text">
+			Welcome <span sec:authentication="name"></span>, 
+			your role is <span sec:authentication="principal.authorities"></span>
+		</h3>
 		<form th:action="@{/logout}" method="post" style="padding:20px">
 			<input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
 		</form>
@@ -23,7 +26,7 @@
 			<th>Year</th>
 			<th>Price</th>
 			<th>Category</th>
-			<th sec:authorize="hasRole('ADMIN')"></th>
+			<th sec:authorize="hasAuthority('ADMIN')"></th>
 			<th></th>
 		</tr>
 		<tr th:each="book : ${books}">
@@ -33,7 +36,7 @@
 			<td th:text="${book.publicationYear}">year</td>
 			<td th:text="${book.price}">price</td>
 			<td th:text="${book.category.name}">category</td>
-			<td sec:authorize="hasRole('ADMIN')">
+			<td sec:authorize="hasAuthority('ADMIN')">
 				<button th:onmouseup=
 					"confirmDeletion([[${book.id}]],
 					[[${book.author}]],

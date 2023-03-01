@@ -49,7 +49,7 @@ public class BookstoreApplication {
 					categoryRepository.findByName("Science").get(0)));
 			
 			// Passwords for demo users
-			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(20);
+			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(12);
 			String userPassword1 = passwordEncoder.encode("user");
 			String userPassword2 = passwordEncoder.encode("admin");
 			

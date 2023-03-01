@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
 import com.example.app.web.UserDetailsServiceImpl;
 
@@ -19,17 +20,21 @@ public class WebSecurityConfig {
 	private UserDetailsServiceImpl userDetailsService;
 	
 	@Bean
-	public SecurityFilterChain configure(HttpSecurity http) throws Exception {
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		// Restrict access to h2-console in production!
 		http
 			.authorizeHttpRequests()
-				.requestMatchers("/")
-				.permitAll()
+				.requestMatchers("/").permitAll()
+				.requestMatchers(toH2Console()).permitAll()
 				.anyRequest()
 				.authenticated()
 				.and()
-			.headers()		// H2 console
+			.headers()
 				.frameOptions()
 				.disable()
+				.and()
+			.csrf()
+				.ignoringRequestMatchers(toH2Console())
 				.and()
 			.formLogin()
 				.loginPage("/login")

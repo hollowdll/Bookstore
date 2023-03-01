@@ -6,7 +6,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.example.app.domain.AppUser;
+import com.example.app.domain.AppUserRepository;
 import com.example.app.domain.Book;
 import com.example.app.domain.BookRepository;
 import com.example.app.domain.Category;
@@ -22,7 +25,11 @@ public class BookstoreApplication {
 	}
 
 	@Bean
-	public CommandLineRunner bookstoreInitializer(BookRepository bookRepository, CategoryRepository categoryRepository) {
+	public CommandLineRunner bookstoreInitializer(
+		BookRepository bookRepository,
+		CategoryRepository categoryRepository,
+		AppUserRepository appUserRepository
+	) {
 		return (args) -> {
 			log.info("Save a couple of categories");
 			categoryRepository.save(new Category("Horror"));
@@ -40,6 +47,28 @@ public class BookstoreApplication {
 					categoryRepository.findByName("Romance").get(0)));
 			bookRepository.save(new Book("Software Engineering", "Author123", "999-666-333", 2015, 45,
 					categoryRepository.findByName("Science").get(0)));
+			
+			// Passwords for demo users
+			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(20);
+			String userPassword1 = passwordEncoder.encode("user");
+			String userPassword2 = passwordEncoder.encode("admin");
+			
+			System.out.println(userPassword1);
+			System.out.println(userPassword2);
+			
+			log.info("Create users with admin and user role");
+			appUserRepository.save(new AppUser(
+				"user",
+				userPassword1,
+				"user@user.com",
+				"USER"
+			));
+			appUserRepository.save(new AppUser(
+				"admin",
+				userPassword2,
+				"admin@admin.com",
+				"ADMIN"
+			));
 
 			log.info("Fetch all books with all data");
 			for (Book book : bookRepository.findAll()) {
@@ -50,7 +79,6 @@ public class BookstoreApplication {
 			for (Book book : bookRepository.findAll()) {
 				log.info("ID = " + book.getId() + ", Title = " + book.getTitle());
 			}
-
 		};
 	}
 

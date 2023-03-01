@@ -30,7 +30,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			currentAppUser.getPasswordHash(),
 			AuthorityUtils.createAuthorityList(currentAppUser.getRole())
 		);
-		
+	
 		return user;
 	}
 	

@@ -53,9 +53,6 @@ public class BookstoreApplication {
 			String userPassword1 = passwordEncoder.encode("user");
 			String userPassword2 = passwordEncoder.encode("admin");
 			
-			System.out.println(userPassword1);
-			System.out.println(userPassword2);
-			
 			log.info("Create users with admin and user role");
 			appUserRepository.save(new AppUser(
 				"user",
